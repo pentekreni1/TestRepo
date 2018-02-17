@@ -14,7 +14,11 @@ public class Game implements GameSubject {
     private ArrayList<Die> dice = new ArrayList<Die>();
     private int player = Constant.BLACK;
     private boolean rolled = false;
-    private GameBoard board = GameBoard.getInstance();
+    private IGameBoard board = GameBoard.getInstance();
+
+    public Game(IGameBoard iGameBoard){
+        board = iGameBoard;
+    }
 
     public void registerObserver(Observer o) {
         observers.add(o);
@@ -112,8 +116,8 @@ public class Game implements GameSubject {
                     if (!dice.isEmpty()) {
                         checkPossibleMoves();
                     } else {
-                        board.nextPlayer();
                         rolled = false;
+                        board.nextPlayer();
                     }
                     return true;
                 }

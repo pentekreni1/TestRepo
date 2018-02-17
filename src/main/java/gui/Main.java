@@ -12,9 +12,9 @@ public class Main extends Application {
 	@Override
 	public void start(Stage primaryStage) {
 		try {
-			FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/fxml/MainScene.fxml"));
+			FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/fxml/StartScene.fxml"));
 			Parent root = loader.load();
-			GameController controller = (GameController) loader.getController();
+			StartPageController controller = (StartPageController) loader.getController();
 			Scene scene = new Scene(root);
 			primaryStage.setScene(scene);
 			primaryStage.setResizable(false);

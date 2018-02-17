@@ -2,13 +2,14 @@ package model;
 
 import game.Constant;
 import game.GameBoard;
+import game.IGameBoard;
 import model.Move;
 
 public class ScoredMove {
 
     private int score;
     private Move move;
-    private GameBoard board;
+    private IGameBoard board;
 
     public static final int BEAROFF_WEIGHT = 150;
     public static final int CAPTURE_WEIGHT = 5;
@@ -16,7 +17,7 @@ public class ScoredMove {
     public static final int ENTER_HOME_WEIGHT = 20;
     public static final int POSITION_PONDERED_WEIGHT = 2;
 
-    public ScoredMove(Move move, GameBoard board) {
+    public ScoredMove(Move move, IGameBoard board) {
         this.move = move;
         this.board = board;
         getMoveScore();

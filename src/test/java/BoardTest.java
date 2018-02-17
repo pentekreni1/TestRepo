@@ -206,7 +206,7 @@ public class BoardTest {
 		int[] noOfBlackCheckers = new int[] { 3, 1, 3, 3, 5 };
 		board.createAndPlaceCheckers(redSetupPoints, noOfRedCheckers, blackSetupPoints, noOfBlackCheckers);
 		
-		Game g = new Game();
+		Game g = new Game(GameBoard.getInstance());
 		board.setState(board.getBlackBearOffState());
 		g.getDice().add(new Die(6));
 		assertTrue(g.move(new Move(5, 0)));
@@ -222,7 +222,7 @@ public class BoardTest {
 		board.createAndPlaceCheckers(redSetupPoints, noOfRedCheckers, blackSetupPoints, noOfBlackCheckers);
 		board.setState(board.getRedBearOffState());
 		
-		Game g = new Game();
+		Game g = new Game(GameBoard.getInstance());
 		g.getDice().add(new Die(6));
 		List<Integer> results = MoveValidationMethods.getValidMovesForChecker(board.getPoint()[24].peek(), g.getDice());
 		assertTrue(results.isEmpty());
@@ -244,7 +244,7 @@ public class BoardTest {
 		int[] noOfBlackCheckers = new int[] {2};
 		board.createAndPlaceCheckers(redSetupPoints, noOfRedCheckers, blackSetupPoints, noOfBlackCheckers);
 		
-		Game g = new Game();
+		Game g = new Game(GameBoard.getInstance());
 		board.setState(board.getBlackBearOffState());
 		g.getDice().add(new Die(1));
 		g.getDice().add(new Die(1));
@@ -263,7 +263,7 @@ public class BoardTest {
 		int[] noOfBlackCheckers = new int[] {2};
 		board.createAndPlaceCheckers(redSetupPoints, noOfRedCheckers, blackSetupPoints, noOfBlackCheckers);
 		
-		Game g = new Game();
+		Game g = new Game(GameBoard.getInstance());
 		board.setState(board.getRedBearOffState());
 		g.getDice().add(new Die(1));
 		g.getDice().add(new Die(1));

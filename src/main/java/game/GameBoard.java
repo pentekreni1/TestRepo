@@ -15,7 +15,7 @@ import states.RedBarState;
 import states.RedBearOffState;
 import states.RedState;
 
-public class GameBoard implements BoardSubject{
+public class GameBoard implements BoardSubject, IGameBoard{
 	private static GameBoard instance = new GameBoard();
 	private Stack<Checker>[] points;
 	
@@ -239,8 +239,6 @@ public class GameBoard implements BoardSubject{
 		setState(nextState);
 		detectBearOffState();
 		notifyPlayer(getState().getColor());
-
-
 	}
 
 	public void notifyPlayer(int player) {

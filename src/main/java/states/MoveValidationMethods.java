@@ -10,8 +10,13 @@ import model.Die;
 import model.Move;
 
 public class MoveValidationMethods {
-	private static GameBoard board = GameBoard.getInstance();
+	private static IGameBoard board = GameBoard.getInstance();
 	private static Stack<Checker>[] points = board.getPoint();
+
+	public static void setGameBoard(IGameBoard iGameBoard){
+		board = iGameBoard;
+		points = board.getPoint();
+	}
 
 	public static boolean basicMoveTests(Move move, int stateColor) {
 		int fromPoint = move.getFromPosition();
@@ -171,7 +176,7 @@ public class MoveValidationMethods {
 	
 	public static List<Integer> getValidMovesForChecker(Checker c, List<Die> dice) {
 		List<Integer> toReturn = new ArrayList<Integer>();
-		GameState state = GameBoard.getInstance().getState();
+		GameState state = board.getState();
 		int toPoint;
 
 		for (Die d : dice) {

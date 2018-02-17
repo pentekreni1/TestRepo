@@ -1,6 +1,8 @@
 package gui;
 
-import game.*;
+import game.AiGameBoard;
+import game.Constant;
+import game.Game;
 import game.Observer;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -37,7 +39,7 @@ import states.MoveValidationMethods;
 import java.util.*;
 import java.util.Map.Entry;
 
-public class GameController implements Observer {
+public class AiGameController implements Observer {
 
     private AnchorPane ap;
 
@@ -126,15 +128,15 @@ public class GameController implements Observer {
     @FXML
     Text informationText;
 
-    GameBoard board = GameBoard.getInstance();
+    AiGameBoard board = AiGameBoard.getInstance();
     Game game;
     Stack<Checker>[] points = board.getPoint();
     Shape[] polygon;
     ImageView[] guiDice;
     Map<Integer, Shape> pointMap;
     Map<Shape, Integer> shapeIndexMap;
-    Map<Circle, Checker> checkerMap;
-    Map<Checker, Circle> circleMap;
+    public Map<Circle, Checker> checkerMap;
+    public Map<Checker, Circle> circleMap;
     Boolean aiPlayer;
 
     Point2D dragAnchor;
@@ -170,10 +172,11 @@ public class GameController implements Observer {
         board.setUp();
         board.setState(board.getBlackState());
         board.nextPlayer();
-        board.nextPlayer();
+//        board.nextPlayer();
         enableCheckers(board.getState().getColor());
         game = new Game(board);
         game.registerObserver(this);
+        board.setController(this);
     }
 
     public void drawChecker(Checker checker, int color) {
@@ -283,6 +286,14 @@ public class GameController implements Observer {
 
         ap.getChildren().add(checker);
         return checker;
+    }
+
+    public void drawMovedCheckersByAi(Circle checker, Move move){
+        placeOnStack(checker, move.getToPosition());
+        game.move(new Move(move.getFromPosition(), move.getToPosition()));
+        enableCheckers(board.getState().getColor());
+        countBearOff();
+        removeHighlight();
     }
 
     private void highlightValidPoints(Checker checker) {
@@ -487,6 +498,26 @@ public class GameController implements Observer {
             redBorneOffCount.toFront();
         }
     }
+
+    public Game getGame(){
+        return game;
+    }
+
+    public Circle getCircle(Checker checker){
+        return circleMap.get(checker);
+    }
+
+    public Checker getChecker(int position){
+        for (Map.Entry<Circle, Checker> entry : checkerMap.entrySet()) {
+            Checker checker = entry.getValue();
+            Stack<Checker> stack = points[position];
+            if (checker.getPosition() == position ){ //&& stack.get(stack.size()-1).equals(checker))
+                return checker;
+            }
+        }
+        return null;
+    }
+
 
     public void notifyNoMoves() {
         informationText.setText("No possible moves");
