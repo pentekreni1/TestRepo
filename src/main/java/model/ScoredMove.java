@@ -1,13 +1,11 @@
 package model;
 
 import game.Constant;
-import game.GameBoard;
 import game.IGameBoard;
-import model.Move;
 
 public class ScoredMove {
 
-    private int score;
+    private int score = 1;
     private Move move;
     private IGameBoard board;
 
@@ -35,16 +33,16 @@ public class ScoredMove {
         int toPosition = this.move.getToPosition();
         int color = board.getState().getColor();
 
-        if (color == Constant.RED && toPosition == 25) {
-            score += BEAROFF_WEIGHT;
-        }
+        if (color == Constant.BLACK) {
+            score += (25 - toPosition) * POSITION_PONDERED_WEIGHT;
 
-        if (color == Constant.RED && toPosition >= 19) {
-            score += ENTER_HOME_WEIGHT;
-        }
+            if (toPosition == 0) {
+                score += BEAROFF_WEIGHT;
+            }
 
-        if (color == Constant.RED) {
-            score += toPosition*POSITION_PONDERED_WEIGHT;
+            if (toPosition <= 6) {
+                score += ENTER_HOME_WEIGHT;
+            }
         }
     }
 }
